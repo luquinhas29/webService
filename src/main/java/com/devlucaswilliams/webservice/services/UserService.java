@@ -1,14 +1,15 @@
 package com.devlucaswilliams.webservice.services;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Service;
 
 import com.devlucaswilliams.webservice.entities.User;
 import com.devlucaswilliams.webservice.repositories.UserRepository;
+import com.devlucaswilliams.webservice.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = userRepository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 
 	}
 	
