@@ -13,6 +13,8 @@ import com.devlucaswilliams.webservice.repositories.UserRepository;
 import com.devlucaswilliams.webservice.services.exceptions.DataBaseException;
 import com.devlucaswilliams.webservice.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 	
@@ -45,10 +47,15 @@ public class UserService {
 }
 
 	public User update(Long id, User obj) {
+		try {
 		User entity = userRepository.getReferenceById(id);
 		updateData(entity, obj);
 		return userRepository.save(entity);
+	}catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
 	}
+	}
+		
 
 	private void updateData(User entity, User obj) {
 		entity.setName(obj.getName());
