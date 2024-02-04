@@ -9,4 +9,5 @@
 - CRUD - Create, Retrieve, Update, Delete 
 - Tratamento de exceções
 
-  
+## Modelo Conceitual Web Service
+
